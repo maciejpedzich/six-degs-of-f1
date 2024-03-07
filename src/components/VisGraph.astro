@@ -1,0 +1,58 @@
+---
+import type { Node, Edge, Options } from 'vis-network/esnext';
+
+export interface Props {
+  nodes: Node[];
+  edges: Edge[];
+  options?: Options;
+}
+
+const { nodes, edges, options = {} } = Astro.props;
+---
+
+<vis-graph
+  data-nodes={JSON.stringify(nodes)}
+  data-edges={JSON.stringify(edges)}
+  data-options={JSON.stringify(options)}
+>
+  <div></div>
+</vis-graph>
+
+<script>
+  import type { Node, Data, Edge, Options } from 'vis-network/esnext';
+  import { DataSet } from 'vis-data/esnext';
+  import { Network } from 'vis-network/esnext';
+
+  class VisGraph extends HTMLElement {
+    constructor() {
+      super();
+
+      const nodes = new DataSet(
+        JSON.parse(this.dataset.nodes as string) as Node[]
+      );
+      const edges = new DataSet<Edge>(
+        JSON.parse(this.dataset.edges as string) as Edge[]
+      );
+
+      const container = this.querySelector('div')!;
+      const data: Data = {
+        nodes,
+        edges
+      };
+      const options: Options = {
+        ...(JSON.parse(this.dataset.options as string) as Options)
+      };
+
+      new Network(container, data, options);
+    }
+  }
+
+  customElements.define('vis-graph', VisGraph);
+</script>
+
+<style>
+  div {
+    width: 100vw;
+    height: 100vh;
+  }
+</style>
