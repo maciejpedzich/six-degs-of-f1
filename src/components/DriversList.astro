@@ -1,0 +1,16 @@
+---
+import { db } from '@/db';
+
+const { records } = await db.executeQuery(
+  `MATCH (d:Driver)
+  RETURN
+    (d.forename + " " + d.surname) AS fullname
+  ORDER BY
+    toUpper(d.surname),
+    toUpper(d.forename)`
+);
+---
+
+<datalist id="drivers">
+  {records.map((rec) => <option value={rec.get('fullname')} />)}
+</datalist>

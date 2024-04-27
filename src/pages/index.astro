@@ -1,23 +1,53 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import VisGraph from '../components/VisGraph.astro';
+import DriversList from '@/components/DriversList.astro';
 
-const nodes = [
-  { id: 1, label: 'Node 1' },
-  { id: 2, label: 'Node 2' },
-  { id: 3, label: 'Node 3' },
-  { id: 4, label: 'Node 4' },
-  { id: 5, label: 'Node 5' }
-];
-const edges = [
-  { from: 1, to: 3 },
-  { from: 1, to: 2 },
-  { from: 2, to: 4 },
-  { from: 2, to: 5 },
-  { from: 3, to: 3 }
-];
+Astro.response.headers.set('Cache-Control', 'public, max-age=604800');
 ---
 
 <BaseLayout>
-  <VisGraph nodes={nodes} edges={edges} />
+  <hgroup>
+    <h1>Six Degrees of Formula One</h1>
+    <p>Find out which driver is the sport's Kevin Bacon</p>
+  </hgroup>
+  <p id="prompt">Get all the shortest paths from/to:</p>
+  <form action="/paths" method="GET">
+    <fieldset class="grid">
+      <input
+        type="text"
+        name="source"
+        placeholder="Source"
+        aria-label="Source"
+        list="drivers"
+        autocomplete="off"
+        required
+      />
+      <input
+        type="text"
+        name="dest"
+        placeholder="Destination"
+        aria-label="Destination"
+        list="drivers"
+        autocomplete="off"
+        required
+      />
+      <DriversList />
+    </fieldset>
+    <button type="submit">Submit</button>
+  </form>
 </BaseLayout>
+
+<style>
+  #prompt {
+    margin-top: 1.75rem;
+  }
+
+  fieldset.grid {
+    margin-bottom: 0.25rem;
+  }
+
+  button[type='submit'] {
+    padding: 0.5rem 0.75rem;
+    width: unset;
+  }
+</style>
