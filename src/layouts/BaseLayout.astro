@@ -8,11 +8,18 @@ import '@picocss/pico/css/pico.blue.min.css';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Six Degrees of Formula One</title>
+    <title>Six Degrees of F1</title>
   </head>
   <body class="container">
     <header>
       <nav aria-label="Main navigation">
+        <ul>
+          <li>
+            <a id="nav-brand" class="pico-color-grey-50" href="/">
+              <strong>Six Degrees of F1</strong>
+            </a>
+          </li>
+        </ul>
         <ul>
           <li><a href="/about">About</a></li>
           <li><a href="/credits">Credits</a></li>
@@ -20,15 +27,11 @@ import '@picocss/pico/css/pico.blue.min.css';
             <a href="https://github.com/maciejpedzich/sixdegs">Source Code</a>
           </li>
         </ul>
-        <ul>
-          <li>theme switch</li>
-        </ul>
       </nav>
     </header>
     <main>
       <slot />
     </main>
-    <div id="spacer"></div>
     <footer>
       <small>
         Made with 🧠 by <a href="https://maciejpedzi.ch">Maciej Pędzich</a>
@@ -44,12 +47,17 @@ import '@picocss/pico/css/pico.blue.min.css';
     flex-direction: column;
   }
 
+  #nav-brand {
+    color: unset;
+    text-decoration-color: inherit;
+  }
+
   .container {
     max-width: 65ch;
     text-align: center;
   }
 
-  #spacer {
+  main {
     flex: 1 0 auto;
   }
 
