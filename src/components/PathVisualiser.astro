@@ -100,9 +100,15 @@ if (paramsNotEqual) {
 </p>
 {
   nodes.length > 0 && (
-    <div id="graph-container">
-      <Graph nodes={nodes} edges={edges} />
-    </div>
+    <>
+      <div id="graph-container">
+        <Graph nodes={nodes} edges={edges} />
+      </div>
+      <small>
+        Drag to pan, scroll to zoom. Click on a node to highlight it and its
+        links.
+      </small>
+    </>
   )
 }
 
@@ -110,5 +116,6 @@ if (paramsNotEqual) {
   #graph-container {
     height: 600px;
     border: 1px solid gray;
+    margin-bottom: 0.5rem;
   }
 </style>

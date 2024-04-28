@@ -4,16 +4,14 @@ import type { Node, Edge, Options } from 'vis-network/esnext';
 interface Props {
   nodes: Node[];
   edges: Edge[];
-  options?: Options;
 }
 
-const { nodes, edges, options = {} } = Astro.props;
+const { nodes, edges } = Astro.props;
 ---
 
 <vis-graph
   data-nodes={JSON.stringify(nodes)}
   data-edges={JSON.stringify(edges)}
-  data-options={JSON.stringify(options)}
 >
   <div></div>
 </vis-graph>
@@ -59,8 +57,7 @@ const { nodes, edges, options = {} } = Astro.props;
             levelSeparation: 80
           }
         },
-        physics: false,
-        ...(JSON.parse(this.dataset.options as string) as Options)
+        physics: false
       };
 
       new Network(container, data, options);
