@@ -1,21 +1,27 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import DriversList from '@/components/DriversList.astro';
+import PathVisualiser from '@/components/PathVisualiser.astro';
 
-Astro.response.headers.set('Cache-Control', 'public, max-age=604800');
+const source = (Astro.url.searchParams.get('source')! || '').trim();
+const dest = (Astro.url.searchParams.get('dest')! || '').trim();
+
+// Cache the page for 2 weeks
+Astro.response.headers.set('Cache-Control', 'public, max-age=1209600');
 ---
 
 <BaseLayout>
   <hgroup>
-    <h1>Six Degrees of Formula One</h1>
+    <h1>Six Degrees of F1</h1>
     <p>Find out which driver is the sport's Kevin Bacon</p>
   </hgroup>
   <p id="prompt">Get all the shortest paths from/to:</p>
-  <form action="/paths" method="GET">
+  <form action="/" method="GET">
     <fieldset class="grid">
       <input
         type="text"
         name="source"
+        value={source}
         placeholder="Source"
         aria-label="Source"
         list="drivers"
@@ -25,6 +31,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=604800');
       <input
         type="text"
         name="dest"
+        value={dest}
         placeholder="Destination"
         aria-label="Destination"
         list="drivers"
@@ -35,6 +42,11 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=604800');
     </fieldset>
     <button type="submit">Submit</button>
   </form>
+  {
+    source !== '' && dest !== '' && (
+      <PathVisualiser source={source} dest={dest} />
+    )
+  }
 </BaseLayout>
 
 <style>
@@ -47,6 +59,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=604800');
   }
 
   button[type='submit'] {
+    margin-bottom: 2rem;
     padding: 0.5rem 0.75rem;
     width: unset;
   }
