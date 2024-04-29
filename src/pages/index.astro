@@ -6,14 +6,16 @@ import PathVisualiser from '@/components/PathVisualiser.astro';
 const source = (Astro.url.searchParams.get('source')! || '').trim();
 const dest = (Astro.url.searchParams.get('dest')! || '').trim();
 
+const noEmptyParams = source !== '' && dest !== '';
+
 // Cache the page for 2 weeks
 Astro.response.headers.set('Cache-Control', 'public, max-age=1209600');
 ---
 
 <BaseLayout>
   <hgroup>
-    <h1>Six Degrees of F1</h1>
-    <p>Find out which driver is the sport's Kevin Bacon</p>
+    <h1>Six Degrees of Formula 1</h1>
+    <p>Find out who's the sport's Kevin Bacon</p>
   </hgroup>
   <p id="prompt">Get all the shortest paths from/to:</p>
   <form action="/" method="GET">
@@ -40,13 +42,9 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=1209600');
       />
       <DriversList />
     </fieldset>
-    <button type="submit">Submit</button>
+    <button type="submit">Search</button>
   </form>
-  {
-    source !== '' && dest !== '' && (
-      <PathVisualiser source={source} dest={dest} />
-    )
-  }
+  {noEmptyParams && <PathVisualiser source={source} dest={dest} />}
 </BaseLayout>
 
 <style>

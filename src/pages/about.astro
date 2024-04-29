@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <h1>About</h1>
+  <p>
+    Inspired by <a href="https://www.sixdegreesofwikipedia.com" target="_blank"
+      >Six Degrees of Wikipedia</a
+    >, Six Degress of Formula 1 stores data of over 800 drivers, who are
+    connected together by about 5000 links. If two drivers competed for the same
+    team in at least one race, there's a link between them.
+  </p>
+  <p>
+    Simply enter the names of two F1 drivers, and you'll be shown how to get
+    from one to the other using as few connections as possible.
+  </p>
+  <p>
+    The aforementioned data was sourced from <a
+      href="http://ergast.com/mrd"
+      target="_blank">Ergast</a
+    >. The website was built with <a href="https://astro.build" target="_blank"
+      >Astro</a
+    >, <a href="https://picocss.com/" target="_blank">PicoCSS</a>, <a
+      href="https://neo4j.com"
+      target="_blank">Neo4j</a
+    >, and <a href="https://visjs.org" target="_blank">vis.js</a>.
+  </p>
+</BaseLayout>
+
+<style>
+  p {
+    text-align: left;
+  }
+</style>
