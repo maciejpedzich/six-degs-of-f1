@@ -1,5 +1,8 @@
 ---
 import '@picocss/pico/css/pico.blue.min.css';
+
+const title = 'Six Degrees of Formula 1';
+const description = 'Get all the shortest paths between two F1 drivers';
 ---
 
 <html lang="en">
@@ -8,7 +11,16 @@ import '@picocss/pico/css/pico.blue.min.css';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Six Degrees of F1</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
   </head>
   <body class="container">
     <header>
@@ -22,7 +34,6 @@ import '@picocss/pico/css/pico.blue.min.css';
         </ul>
         <ul>
           <li><a href="/about">About</a></li>
-          <li><a href="/credits">Credits</a></li>
           <li>
             <a href="https://github.com/maciejpedzich/sixdegs">Source Code</a>
           </li>
@@ -34,7 +45,11 @@ import '@picocss/pico/css/pico.blue.min.css';
     </main>
     <footer>
       <small>
-        Made with 🧠 by <a href="https://maciejpedzi.ch">Maciej Pędzich</a>
+        Made by <a href="https://maciejpedzi.ch">Maciej Pędzich</a>. This
+        website is unofficial and is not associated in any way with the Formula
+        1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD
+        CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula
+        One Licensing B.V.
       </small>
     </footer>
   </body>
