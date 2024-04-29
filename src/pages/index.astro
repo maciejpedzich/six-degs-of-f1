@@ -1,12 +1,32 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import DriversList from '@/components/DriversList.astro';
-import PathVisualiser from '@/components/PathVisualiser.astro';
+import ShortestPathsGraph from '@/components/ShortestPathsGraph.astro';
 
-const source = (Astro.url.searchParams.get('source')! || '').trim();
-const dest = (Astro.url.searchParams.get('dest')! || '').trim();
+import { getDriverNames } from '@/db/getDriverNames';
+import { getShortestPaths } from '@/db/getShortestPaths';
+
+const source = Astro.url.searchParams.get('source')?.trim() || '';
+const dest = Astro.url.searchParams.get('dest')?.trim() || '';
 
 const noEmptyParams = source !== '' && dest !== '';
+const paramsNotEqual = source !== dest;
+
+let driverNames: string[] = [];
+let graphProps: Awaited<ReturnType<typeof getShortestPaths>> = {
+  nodes: [],
+  edges: [],
+  numPaths: 0,
+  degsOfSeparation: 0
+};
+
+try {
+  driverNames = await getDriverNames();
+
+  if (noEmptyParams && paramsNotEqual)
+    graphProps = await getShortestPaths(source, dest);
+} catch (error) {
+  return Astro.redirect('/error');
+}
 
 // Cache the page for 2 weeks
 Astro.response.headers.set('Cache-Control', 'public, max-age=1209600');
@@ -40,11 +60,20 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=1209600');
         autocomplete="off"
         required
       />
-      <DriversList />
+      <datalist id="drivers">
+        {driverNames.map((name) => <option value={name} />)}
+      </datalist>
     </fieldset>
     <button type="submit">Search</button>
   </form>
-  {noEmptyParams && <PathVisualiser source={source} dest={dest} />}
+  {
+    noEmptyParams &&
+      (paramsNotEqual ? (
+        <ShortestPathsGraph {...graphProps} />
+      ) : (
+        "There's nothing wrong with the inputs, except they're identical."
+      ))
+  }
 </BaseLayout>
 
 <style>
