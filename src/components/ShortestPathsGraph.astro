@@ -1,20 +1,45 @@
 ---
-import type { Node, Edge } from 'vis-network/esnext';
+import { getShortestPaths } from '@/db/getShortestPaths';
+import { pluralise } from '@/utils/pluralise';
 
-interface Props {
-  nodes: Node[];
-  edges: Edge[];
-}
+type Props = Awaited<ReturnType<typeof getShortestPaths>>;
 
-const { nodes, edges } = Astro.props;
+const { nodes, edges, numPaths, degsOfSeparation } = Astro.props;
 ---
 
-<vis-graph
-  data-nodes={JSON.stringify(nodes)}
-  data-edges={JSON.stringify(edges)}
->
-  <div></div>
-</vis-graph>
+<p>
+  {
+    nodes.length > 0 ? (
+      degsOfSeparation == 1 ? (
+        'Colosally, these drivers were teammates!'
+      ) : (
+        <span>
+          Found <strong>{pluralise('path', numPaths)}</strong> with
+          <strong>{pluralise('degree', degsOfSeparation)}</strong>
+          of separation.
+        </span>
+      )
+    ) : (
+      'No paths were found!'
+    )
+  }
+</p>
+{
+  nodes.length > 0 && (
+    <>
+      <vis-graph
+        data-nodes={JSON.stringify(nodes)}
+        data-edges={JSON.stringify(edges)}
+      >
+        <div id="graph-container" />
+      </vis-graph>
+      <small>
+        Drag to pan, scroll to zoom. Click on a node to highlight it and its
+        links.
+      </small>
+    </>
+  )
+}
 
 <script>
   import type { Node, Data, Edge, Options } from 'vis-network/esnext';
@@ -46,7 +71,6 @@ const { nodes, edges } = Astro.props;
           }
         },
         edges: {
-          arrows: 'to',
           color: '#4178e7'
         },
         layout: {
@@ -68,8 +92,10 @@ const { nodes, edges } = Astro.props;
 </script>
 
 <style>
-  div {
+  #graph-container {
     width: 100%;
-    height: 100%;
+    height: 600px;
+    border: 1px solid gray;
+    margin-bottom: 1rem;
   }
 </style>
