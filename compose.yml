@@ -1,0 +1,35 @@
+networks:
+  private:
+    external: false
+    name: sixdegs
+  public:
+    external: true
+    name: $PUBLIC_NETWORK
+
+volumes:
+  data:
+    name: sixdegs_data
+    driver: local
+
+services:
+  # app:
+  #   build:
+  #     dockerfile: ./Dockerfile
+  #   container_name: sixdegs
+  #   hostname: sixdegs
+  #   networks:
+  #     - public
+  #     - private
+  #   restart: unless-stopped
+  #   env_file: .env
+  #   depends_on:
+  #     - db
+  db:
+    image: memgraph/memgraph:2.18.1
+    container_name: sixdegs-db
+    hostname: sixdegs-db
+    networks:
+      - private
+    volumes:
+      - data:/var/lib/memgraph
+    restart: always
