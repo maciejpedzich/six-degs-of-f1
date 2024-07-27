@@ -22,7 +22,7 @@ export async function getShortestPaths(source: string, dest: string) {
     WHERE
       (s.forename + " " + s.surname) = $source
       AND (d.forename + " " + d.surname) = $dest
-    MATCH path = allShortestPaths((s)-[*..20]-(d))
+    MATCH path = (s)-[:WAS_TEAMMATES_WITH *ALLSHORTEST (r, n | 1)]-(d)
     RETURN path;`,
     { source, dest }
   );
