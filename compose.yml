@@ -21,10 +21,7 @@ services:
       - public
       - private
     restart: unless-stopped
-    environment:
-      DB_URI: $DB_URI
-      DB_USERNAME: $DB_USERNAME
-      DB_PASSWORD: $DB_PASSWORD
+    env_file: .env
     depends_on:
       - db
   db:
