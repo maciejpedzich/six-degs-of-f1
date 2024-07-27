@@ -2,9 +2,9 @@
 /// <reference types="astro/client" />
 
 interface ImportMetaEnv {
-  readonly NEO4J_DB_URI: string;
-  readonly NEO4J_USERNAME: string;
-  readonly NEO4J_PASSWORD: string;
+  readonly DB_URI: string;
+  readonly DB_USERNAME: string;
+  readonly DB_PASSWORD: string;
 }
 
 interface ImportMeta {
