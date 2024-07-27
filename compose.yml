@@ -12,18 +12,18 @@ volumes:
     driver: local
 
 services:
-  # app:
-  #   build:
-  #     dockerfile: ./Dockerfile
-  #   container_name: sixdegs
-  #   hostname: sixdegs
-  #   networks:
-  #     - public
-  #     - private
-  #   restart: unless-stopped
-  #   env_file: .env
-  #   depends_on:
-  #     - db
+  app:
+    build:
+      dockerfile: ./Dockerfile
+    container_name: sixdegs
+    hostname: sixdegs
+    networks:
+      - public
+      - private
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      - db
   db:
     image: memgraph/memgraph:2.18.1
     container_name: sixdegs-db
