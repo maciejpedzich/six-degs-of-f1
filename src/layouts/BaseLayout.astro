@@ -2,7 +2,8 @@
 import '@picocss/pico/css/pico.blue.min.css';
 
 const title = 'Six Degrees of Formula 1';
-const description = 'Get all the shortest paths between two F1 drivers';
+const description =
+  'Get all the shortest paths between two F1 drivers and their teammates';
 ---
 
 <html lang="en">
@@ -21,6 +22,15 @@ const description = 'Get all the shortest paths between two F1 drivers';
     <meta property="twitter:url" content={Astro.url.href} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    {
+      import.meta.env.PROD && (
+        <script
+          defer
+          src="https://analytics.maciejpedzi.ch/script.js"
+          data-website-id="22dd2b40-ed52-4e16-ba31-6cef599e4a24"
+        />
+      )
+    }
   </head>
   <body class="container">
     <header>
@@ -35,7 +45,9 @@ const description = 'Get all the shortest paths between two F1 drivers';
         <ul>
           <li><a href="/about">About</a></li>
           <li>
-            <a href="https://github.com/maciejpedzich/sixdegs">Source Code</a>
+            <a href="https://github.com/maciejpedzich/six-degs-of-f1">
+              Source Code
+            </a>
           </li>
         </ul>
       </nav>
