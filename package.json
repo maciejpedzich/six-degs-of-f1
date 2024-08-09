@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@astrojs/node": "^8.2.5",
-    "@picocss/pico": "^2.0.6",
     "astro": "^4.4.14",
-    "neo4j-driver": "^5.18.0",
-    "vis-network": "^9.1.9"
+    "neo4j-driver": "^5.18.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.6",
-    "typescript": "^5.4.2"
+    "@picocss/pico": "^2.0.6",
+    "typescript": "^5.4.2",
+    "vis-network": "^9.1.9"
   }
 }
