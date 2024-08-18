@@ -24,9 +24,6 @@ try {
 
   if (noEmptyParams && paramsNotEqual)
     graphProps = await getShortestPaths(source, dest);
-
-  // Cache the page for 2 weeks
-  Astro.response.headers.set('Cache-Control', 'public, max-age=1209600');
 } catch (error) {
   return Astro.redirect('/error');
 }
