@@ -22,8 +22,14 @@ let graphProps: Awaited<ReturnType<typeof getShortestPaths>> = {
 try {
   driverNames = await getDriverNames();
 
-  if (noEmptyParams && paramsNotEqual)
+  if (noEmptyParams && paramsNotEqual) {
+    const timestamp = new Date().toLocaleString('pl');
+    const clientIp =
+      Astro.request.headers.get('X-Forwarded-For') || Astro.clientAddress;
+
+    console.log(`[${timestamp}] ${clientIp} FROM ${source} TO ${dest}`);
     graphProps = await getShortestPaths(source, dest);
+  }
 } catch (error) {
   return Astro.redirect('/error');
 }
